@@ -1,0 +1,57 @@
+﻿  Encryption.cpp
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(66): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(69): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(73): warning C4018: >=: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(95): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(96): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(104): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(114): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(117): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(131): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(166): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(189): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(190): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(198): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(215): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(218): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(223): warning C4018: >=: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(242): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(243): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(250): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(255): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(256): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(264): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(283): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(301): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(304): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(319): warning C4018: >=: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(323): warning C4018: >=: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(364): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(365): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(399): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(449): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(466): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(474): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(488): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(528): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(536): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(540): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(548): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(574): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(575): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(582): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(587): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(588): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(595): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(621): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(622): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(623): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(669): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(696): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(697): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(705): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(724): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(728): warning C4018: <: несоответствие типов со знаком и без знака
+e:\desktop\materials\my projects\с++\захист даних (лабы)\l1\encryption\encryption\encryption.cpp(740): warning C4018: <: несоответствие типов со знаком и без знака
+  Encryption.vcxproj -> E:\Desktop\Materials\My projects\С++\Захист даних (лабы)\L1\Encryption\Debug\Encryption.exe
+  Encryption.vcxproj -> E:\Desktop\Materials\My projects\С++\Захист даних (лабы)\L1\Encryption\Debug\Encryption.pdb (Partial PDB)
