@@ -814,6 +814,7 @@ int main()
 			getline(cin, surname);
 			transform(surname.begin(), surname.end(), surname.begin(), toupper);
 
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
 			vector<vector<int> >table(2, vector<int>(3, 0));
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 3; j++)
@@ -844,12 +845,21 @@ int main()
 			//Enc
 			string result = "";
 			int block = surname.length() / 3, ind = 0;
+			
+			int f = 0, s = 0, t = 0;
+			if (table[1][0] == 1) f = 0;
+			else if (table[1][1] == 1) f = 1;
+			else if (table[1][2] == 1) f = 2;
+			if (table[1][0] == 2) s = 0;
+			else if (table[1][1] == 2) s = 1;
+			else if (table[1][2] == 2) s = 2;
+			if (table[1][0] == 3) t = 0;
+			else if (table[1][1] == 3) t = 1;
+			else if (table[1][2] == 3) t = 2;
 			for (int i = 0; i < block; i++) {
-				for (int j = ind, z1 = 0; j < ind + 3; j++, z1++) {
-					for (int z = 0; z < 3; z++) {
-						if (table[1][z] == z1 + 1){result += surname[block * i + z]; break;}
-					}
-				}
+				result += surname[3 * i + f];
+				result += surname[3 * i + s];
+				result += surname[3 * i + t];
 			}
 			cout << "\nEncrypted string: " << result << endl;
 			break;
