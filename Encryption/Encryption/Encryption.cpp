@@ -12,7 +12,7 @@ using namespace std;
 
 void showMenu()
 {
-	cout << "Select one of the algorithms (1-13):" << endl;
+	cout << "Select one of the algorithms (1-20):" << endl;
 	string n = "+--+------------------------------+";
 	cout << n << endl;
 	cout << "| 1| cipher of Caesar             |" << endl;
@@ -30,6 +30,14 @@ void showMenu()
 	cout << "|12| cipher Teni                  |" << endl;
 	cout << "|13| combined cipher              |" << endl;
 	cout << n << endl;
+	cout << "|14| simple single permutation    |" << endl;
+	cout << "|15| block single permutation     |" << endl;
+	cout << "|16| tabular route permutation    |" << endl;
+	cout << "|17| vertical permutation         |" << endl;
+	cout << "|18| rotary grating               |" << endl;
+	cout << "|19| magic square                 |" << endl;
+	cout << "|20| double permutation           |" << endl;
+	cout << n << endl;
 }
 
 int main()
@@ -45,7 +53,7 @@ int main()
 		while (true)
 		{
 			cin >> number;
-			if (number > 13 || number < 1)
+			if (number > 20 || number < 1)
 				cout << "Please, enter correct number!\nYour choice: ";
 			else
 				break;
@@ -756,6 +764,475 @@ int main()
 			}
 			cout << endl;
 
+			break;
+		}
+		case 14: {
+			cout << "Simple single permutation \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			vector<vector<int> >table(2, vector<int>(surname.length(), 0));
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < surname.length(); j++)
+					table[i][j] = j + 1;
+			}
+			srand(time(0));
+			random_shuffle(table[1].begin(), table[1].end());
+
+			//draw table
+			string prob = "+";
+			for (int i = 0; i < surname.length(); i++)
+				prob += "--+";
+
+			cout << prob << endl;
+			for (int i = 0; i < 2; i++) {
+				cout << '|';
+				for (int j = 0; j < surname.length(); j++) {
+					if (table[i][j] >= 10)cout << table[i][j] << '|';
+					else cout << ' ' << table[i][j] << '|';
+				}
+				cout << endl << prob << endl;
+			}
+
+			//Enc
+			string result = "";
+			for (int i = 0; i < surname.length(); i++) {
+				for (int j = 0; j < surname.length(); j++) {
+					if (table[1][j] == i + 1) {
+						result += surname[j];
+						break;
+					}
+				}
+			}
+			cout << "\nEncrypted string: " << result << endl;
+			break;
+		}
+		case 15: {
+			cout << "Block single permutation \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			vector<vector<int> >table(2, vector<int>(3, 0));
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 3; j++)
+					table[i][j] = j + 1;
+			}
+			srand(time(0));
+			random_shuffle(table[1].begin(), table[1].end());
+			while (surname.length() % 3 != 0) {
+				if (surname.length() % 2 == 0)surname += 'X';
+				else surname += 'Z';
+			}
+
+			//draw table
+			string prob = "+";
+			for (int i = 0; i < 3; i++)
+				prob += "--+";
+
+			cout << prob << endl;
+			for (int i = 0; i < 2; i++) {
+				cout << '|';
+				for (int j = 0; j < 3; j++) {
+					if (table[i][j] >= 10)cout << table[i][j] << '|';
+					else cout << ' ' << table[i][j] << '|';
+				}
+				cout << endl << prob << endl;
+			}
+
+			//Enc
+			string result = "";
+			int block = surname.length() / 3, ind = 0;
+			for (int i = 0; i < block; i++) {
+				for (int j = ind, z1 = 0; j < ind + 3; j++, z1++) {
+					for (int z = 0; z < 3; z++) {
+						if (table[1][z] == z1 + 1){result += surname[block * i + z]; break;}
+					}
+				}
+			}
+			cout << "\nEncrypted string: " << result << endl;
+			break;
+		}
+		case 16: {
+			cout << "Tabular route permutation \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+			
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			while (surname.length() % 6 != 0)surname += '_';
+			int str = surname.length() / 6;
+
+			vector<vector<char> >table(str, vector<char>(6, 0));
+			string napZap = "", napEnc = "";
+			cout << "Enter the fill direction (lr, rl, ud, du) : ";
+			//cin.ignore();
+			getline(cin, napZap);
+			transform(napZap.begin(), napZap.end(), napZap.begin(), toupper);
+			cout << "Enter the encrypt direction (lr, rl, ud, du) : ";
+			//cin.ignore();
+			getline(cin, napEnc);
+			transform(napEnc.begin(), napEnc.end(), napEnc.begin(), toupper);
+
+			int kl = 0;
+			//zap
+			{
+				if (napZap == "LR") {
+					for (int i = 0; i < str; i++)
+						for (int j = 0; j < 6; j++, kl++)
+							table[i][j] = surname[kl];
+				}
+				else if (napZap == "RL") {
+					for (int i = 0; i < str; i++)
+						for (int j = 5; j >= 0; j--, kl++)
+							table[i][j] = surname[kl];
+				}
+				else if (napZap == "UD") {
+					for (int i = 0; i < 6; i++)
+						for (int j = 0; j < str; j++, kl++)
+							table[j][i] = surname[kl];
+				}
+				else if (napZap == "DU") {
+					for (int i = 0; i < 6; i++)
+						for (int j = str-1; j >= 0; j--, kl++)
+							table[j][i] = surname[kl];
+				}
+			}
+
+
+			//draw
+			string prob = "+"; for (int i = 0; i < 6; i++)prob += "-+"; cout << prob << endl;
+			for (int i = 0; i < str; i++) {
+				cout << '|';
+				for (int j = 0; j < 6; j++) {
+					cout << table[i][j] << '|';
+				}
+				cout << endl << prob << endl;
+			}
+
+
+			//cout
+			string res = "";
+			{
+				if (napEnc == "LR") {
+					for (int i = 0; i < str; i++)
+						for (int j = 0; j < 6; j++, kl++)
+							res += table[i][j];
+				}
+				else if (napEnc == "RL") {
+					for (int i = 0; i < str; i++)
+						for (int j = 5; j >= 0; j--, kl++)
+							res += table[i][j];
+				}
+				else if (napEnc == "UD") {
+					for (int i = 0; i < 6; i++)
+						for (int j = 0; j < str; j++, kl++)
+							res += table[j][i];
+				}
+				else if (napEnc == "DU") {
+					for (int i = 0; i < 6; i++)
+						for (int j = str - 1; j >= 0; j--, kl++)
+							res += table[j][i];
+				}
+			}
+			cout << "\nEncrypted string: " << res << endl;
+			break;
+		}
+		case 17: {
+			cout << "Vertical permutation \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			string key = "";
+			cout << "Enter the string key: ";
+			getline(cin, key);
+			transform(key.begin(), key.end(), key.begin(), toupper);
+
+			//sozd poryadka
+			vector<int> numbers(key.length());
+			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			char l = 'A';
+			int och = 1;
+			for (int i = 0; i < 26 && och <= key.length(); i++, l++) {
+				for (int j = 0; j < key.length(); j++) {
+					if (key[j] == l) { numbers[j] = och; och++;}
+				}
+			}
+
+			//kor str
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			while (surname.length() < key.length() || surname.length() % key.length() != 0)surname += '_';
+			unsigned int str = surname.length() / key.length();
+
+			//zap table
+			vector<vector<char> >table(str, vector<char>(key.length(), 0));
+			int kl = 0;
+			for (int i = 0; i < str; i++)
+				for (int j = 0; j < key.length(); j++, kl++)
+					table[i][j] = surname[kl];
+
+
+			//draw table
+			{
+				string prob = "+";
+				for (int i = 0; i < key.length(); i++)
+					prob += "--+";
+
+				cout << prob << endl;
+				for (int i = 0; i < 1; i++) {
+					cout << '|';
+					for (int j = 0; j < key.length(); j++) {
+						cout << ' ' << key[j] << '|';
+					}
+					cout << endl << prob << endl;
+					cout << '|';
+					for (int j = 0; j < key.length(); j++) {
+						if (numbers[j] >= 10)cout << numbers[j] << '|';
+						else cout << ' ' << numbers[j] << '|';
+					}
+					cout << endl << prob << endl;
+				}
+				for (int i = 0; i < str; i++) {
+					cout << '|';
+					for (int j = 0; j < key.length(); j++) {
+						cout << ' ' << table[i][j] << '|';
+					}
+					cout << endl << prob << endl;
+				}
+			}
+
+
+			//cout
+			string result = "";
+			{
+				for (int i = 0; i < key.length(); i++) {
+					for (int j = 0; j < key.length(); j++) {
+						if (numbers[j] == i + 1) {
+							for (int z = 0; z < str; z++)
+								result += table[z][j];
+						}
+					}
+				}
+			}
+			cout << "\nEncrypted string: " << result << endl;
+			break;
+		}
+		case 18: {
+			cout << "Rotary grating \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			//uravnivanie
+			int raz = 16;
+			if (surname.length() < 16) {
+				while (surname.length() < 16)surname += '_';
+			}
+			else {
+				while (raz < surname.length())raz += 8;
+				while (surname.length() < raz)surname += '_';
+			}
+
+			//sozd
+			int y = raz / 4, ind = 0;
+			vector<vector<char> >table(4, vector<char>(y, 0));
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < y; j += 2, ind++)
+					table[i][j] = surname[ind];
+				for (int j = 1; j < y; j += 2, ind++)
+					table[i + 2][j] = surname[ind];
+				for (int j = 1; j < y; j += 2, ind++)
+					table[i][j] = surname[ind];
+				for (int j = 0; j < y; j += 2, ind++)
+					table[i + 2][j] = surname[ind];
+			}
+
+			//draw
+			string prob = "+"; for (int i = 0; i < y; i++)prob += "-+"; cout << prob << endl;
+			for (int i = 0; i < 4; i++) {
+				cout << '|';
+				for (int j = 0; j < y; j++) {
+					cout << table[i][j] << '|';
+				}
+				cout << endl << prob << endl;
+			}
+
+			//cout
+			string result = "";
+			{
+				for (int i = 0; i < y; i++) {
+					for (int j = 0; j < 4; j++) {
+						result += table[j][i];
+					}
+				}
+			}
+			cout << "\nEncrypted string: " << result << endl;
+			break;
+		}
+		case 19: {
+			cout << "Magic square \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+			
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			//create magic square
+			int n = 1;
+			while (n*n < surname.length())n++;
+			if (n % 2 == 0)n++;
+
+			vector<vector<int> > matrix(n, vector<int>(n, 0));
+			int nsqr = n * n;
+			int i = 0, j = n / 2;
+
+			//filling mahic square
+			{
+				for (int k = 1; k <= nsqr; ++k) {
+					matrix[i][j] = k;
+					i--;
+					j++;
+					if (k % n == 0) {
+						i += 2;
+						--j;
+					}
+					else {
+						if (j == n)
+							j -= n;
+						else if (i < 0)
+							i += n;
+					}
+				}
+			}
+
+			//draw table
+			{
+				string prob = "+";
+				for (int i = 0; i < n; i++)
+					prob += "--+";
+				cout << prob << endl;
+				for (int i = 0; i < n; i++) {
+					cout << '|';
+					for (int j = 0; j < n; j++) {
+						if (matrix[i][j] >= 10)cout << matrix[i][j] << '|';
+						else cout << ' ' << matrix[i][j] << '|';
+					}
+					cout << endl << prob << endl;
+				}
+			}
+
+
+			//changing surname and filling square 
+			while (surname.length() < n*n)surname += '.';
+			vector<vector<char> >table(n, vector<char>(n, 0));
+			string result = "";
+			{
+				int flag = 0;
+				for (int i = 0; i < surname.length(); i++) {
+					flag = 0;
+					for (int j = 0; j < n && flag == 0; j++) {
+						for (int z = 0; z < n; z++) {
+							if (matrix[j][z] == i + 1) {
+								table[j][z] = surname[i];
+								flag++;
+								break;
+							}
+						}
+					}
+				}
+
+				//res
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						result += table[i][j];
+					}
+				}
+
+			}
+			cout << "\nEncrypted string: " << result << endl;
+
+
+			break;
+		}
+		case 20: {
+			cout << "Double permutation \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			//create table and cls and rows
+			int n = 1;
+			while (n*n < surname.length())n++;
+			while (surname.length() < n*n) surname += '_';
+			vector<vector<char> >tableFirst(n, vector<char>(n, 0));
+			vector<vector<char> >tableSecond(n, vector<char>(n, 0));
+			vector<vector<char> >tableThird(n, vector<char>(n, 0));
+			
+			srand(time(0));
+			vector<int> tableR; for (int i = 0; i < n; i++)tableR.push_back(i);
+			vector<int> tableC; for (int i = 0; i < n; i++)tableC.push_back(i);
+			random_shuffle(tableR.begin(), tableR.end());
+			random_shuffle(tableC.begin(), tableC.end());
+
+			//enter table and change
+			{
+				//first
+				for (int i = 0, kl = 0; i < n; i++) {
+					for (int j = 0; j < n; j++, kl++) {
+						tableFirst[i][j] = surname[kl];
+					}
+				}
+				//second
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						tableSecond[j][tableC[i]] = tableFirst[j][i];
+					}
+				}
+				//third
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						tableThird[tableR[i]][j] = tableSecond[i][j];
+					}
+				}
+			}
+
+			//draw table
+			{
+				string prob = "-+";
+				cout << endl;
+				for (int i = 0; i < n; i++)prob += "-+";
+				prob += "   +"; for (int i = 0; i < n; i++)prob += "-+";
+				prob += "   +"; for (int i = 0; i < n; i++)prob += "-+";
+
+				cout << "  "; for (int i = 0; i < n; i++)cout << tableC[i] + 1 << '|';
+				cout << "    "; for (int i = 0; i < n; i++)cout << i + 1 << '|';
+				cout << "    "; for (int i = 0; i < n; i++)cout << i + 1 << '|';
+				cout << endl;
+				cout << prob << endl;
+				for (int z = 0; z < n; z++) {
+					cout << tableR[z] + 1 << '|';
+					for (int i = 0; i < n; i++)cout << tableFirst[z][i] << '|';
+					cout << "  " << tableR[z] + 1 << '|';
+					for (int i = 0; i < n; i++)cout << tableSecond[z][i] << '|';
+					cout << "  " << z + 1 << '|';
+					for (int i = 0; i < n; i++)cout << tableThird[z][i] << '|';
+					cout << endl << prob << endl;
+				}
+			}
+
+			//cout
+			string result = "";
+			{
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						result += tableThird[j][i];
+					}
+				}
+			}
+			cout << "\nEncrypted string: " << result << endl;
 			break;
 		}
 		default:
