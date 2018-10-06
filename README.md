@@ -1,2 +1,2 @@
-# 20-cipher-methods
+# 22-cipher-methods
 ![Image alt](https://github.com/bobikbo/13-cipher-methods/raw/master/logo.png)
