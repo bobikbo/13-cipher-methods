@@ -12,7 +12,7 @@ using namespace std;
 
 void showMenu()
 {
-	cout << "Select one of the algorithms (1-20):" << endl;
+	cout << "Select one of the algorithms (1-22):" << endl;
 	string n = "+--+------------------------------+";
 	cout << n << endl;
 	cout << "| 1| cipher of Caesar             |" << endl;
@@ -38,6 +38,10 @@ void showMenu()
 	cout << "|19| magic square                 |" << endl;
 	cout << "|20| double permutation           |" << endl;
 	cout << n << endl;
+	cout << "|21| gamming cipher by module N/2 |" << endl;
+	cout << n << endl;
+	cout << "|22| ADFGVX                       |" << endl;
+	cout << n << endl;
 }
 
 int main()
@@ -53,7 +57,7 @@ int main()
 		while (true)
 		{
 			cin >> number;
-			if (number > 20 || number < 1)
+			if (number > 22 || number < 1)
 				cout << "Please, enter correct number!\nYour choice: ";
 			else
 				break;
@@ -1243,6 +1247,318 @@ int main()
 				}
 			}
 			cout << "\nEncrypted string: " << result << endl;
+			break;
+		}
+		case 21: {
+			cout << "Gamming cipher by module N/2 \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			string key = "";
+			cout << "Enter the string key: ";
+			getline(cin, key);
+			transform(key.begin(), key.end(), key.begin(), toupper);
+			
+			cout << "Enter the module(2 or else number): ";
+			int mod = 0;
+			cin >> mod;
+			while (mod < 2) { cout << "Please, enter the correct number(2 or higher): "; cin >> mod; }
+
+			//obr key
+			if (key.length() > surname.length()) {
+				string key2 = "";
+				for (int i = 0; i < surname.length(); i++)key2 += key[i];
+				key = key2;
+			}
+			if (key.length() < surname.length()) {
+				string key2 = "";
+				for (int i = 0, j = 0; i < surname.length(); i++, j++) {
+					if (j >= key.length())j = 0;
+					key2 += key[j];
+				}
+				key = key2;
+			}
+
+
+			/*int z = 28;
+			for (int i = 0; i<8; i++)
+			{
+				if (z & 128) cout << "1";
+				else cout << "0";
+				z <<= 1;
+			}*/
+
+			//mod 2
+			if (mod == 2) {
+				
+				map<char, int> table;
+				char s = 'A';
+				for (int i = 65; i <= 90; i++, s++)table[s] = i;
+
+				vector<int> result;
+				for (int i = 0; i < surname.length(); i++) {
+					result.push_back(surname[i] ^ key[i]);
+				}
+
+				//draw table
+				{
+					string prob = "+";
+					for (int i = 0; i < surname.length(); i++)
+						prob += "---------+";
+					cout << prob << endl << '|';
+					//surname
+					for (int i = 0; i < surname.length(); i++) {
+						cout << "    " << surname[i] << "    |";
+					}
+					cout << endl << prob << endl << '|';
+					//surname - kod
+					for (int i = 0; i < surname.length(); i++) {
+						if (table[surname[i]] >= 10)cout << "    " << table[surname[i]] << "   |";
+						else cout << "   " << table[surname[i]] << "   |";
+					}
+					cout << endl << prob << endl << '|';
+					//surname - binary kod
+					for (int i = 0; i < surname.length(); i++) {
+						string str = "";
+						int z = surname[i];
+						for (int i = 0; i<8; i++)
+						{
+							if (i == 4)str += ' ';
+							if (z & 128) str += "1";
+							else str += "0";
+							z <<= 1;
+						}
+						cout << str << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//key
+					for (int i = 0; i < key.length(); i++) {
+						cout << "    " << key[i] << "    |";
+					}
+					cout << endl << prob << endl << '|';
+					//key - kod
+					for (int i = 0; i < key.length(); i++) {
+						if (table[key[i]] >= 10)cout << "    " << table[key[i]] << "   |";
+						else cout << "   " << table[key[i]] << "   |";
+					}
+					cout << endl << prob << endl << '|';
+					//key - binary kod
+					for (int i = 0; i < key.length(); i++) {
+						string str = "";
+						int z = key[i];
+						for (int i = 0; i<8; i++)
+						{
+							if (i == 4)str += ' ';
+							if (z & 128) str += "1";
+							else str += "0";
+							z <<= 1;
+						}
+						cout << str << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//result
+					for (int i = 0; i < result.size(); i++) {
+						//cout << "   " << result[i] << "|";
+						if (result[i] >= 10 && result[i] < 100)cout << "    " << result[i] << "   |";
+						else if (result[i] >= 100)cout << "   " << result[i] << "   |";
+						else if (result[i] < 10)cout << "    " << result[i] << "    |";
+					}
+					cout << endl << prob << endl << '|';
+					//result - kod
+					for (int i = 0; i < result.size(); i++) {
+						//if (table[result[i]] >= 10)cout << table[result[i]] << '|';
+						//else cout << ' ' << table[result[i]] << '|';
+						string str = "";
+						int z = result[i];
+						for (int i = 0; i<8; i++)
+						{
+							if (i == 4)str += ' ';
+							if (z & 128) str += "1";
+							else str += "0";
+							z <<= 1;
+						}
+						cout << str << '|';
+					}
+					cout << endl << prob << endl;
+				}
+
+			}
+			//mod > 2
+			else {
+
+				map<char, int> table;
+				char s = 'A';
+				for (int i = 0; i < 26; i++, s++)table[s] = i;
+
+				string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				string result = "";
+
+				//result
+				for (int i = 0; i < surname.length(); i++) {
+					result += letters[(table[surname[i]] + table[key[i]]) % mod];
+					/*int q = table[surname[i]];
+					int q1 = table[key[i]];
+					int res = (q + q1) % mod;
+					result += letters[res];*/
+				}
+
+				//draw table
+				{
+					string prob = "+";
+					for (int i = 0; i < surname.length(); i++)
+						prob += "--+";
+					cout << prob << endl << '|';
+					//surname
+					for (int i = 0; i < surname.length(); i++) {
+						cout << ' ' << surname[i] << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//surname - kod
+					for (int i = 0; i < surname.length(); i++) {
+						if (table[surname[i]] >= 10)cout << table[surname[i]] << '|';
+						else cout << ' ' << table[surname[i]] << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//key
+					for (int i = 0; i < key.length(); i++) {
+						cout << ' ' << key[i] << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//key - kod
+					for (int i = 0; i < key.length(); i++) {
+						if (table[key[i]] >= 10)cout << table[key[i]] << '|';
+						else cout << ' ' << table[key[i]] << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//result
+					for (int i = 0; i < result.length(); i++) {
+						cout << ' ' << result[i] << '|';
+					}
+					cout << endl << prob << endl << '|';
+					//result - kod
+					for (int i = 0; i < result.length(); i++) {
+						if (table[result[i]] >= 10)cout << table[result[i]] << '|';
+						else cout << ' ' << table[result[i]] << '|';
+					}
+					cout << endl << prob << endl;
+				}
+			}
+
+			break;
+		}
+		case 22: {
+			cout << "ADFGVX \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			string key = "";
+			cout << "Enter the string key: ";
+			getline(cin, key);
+			transform(key.begin(), key.end(), key.begin(), toupper);
+			
+			for (int i = 0; i < surname.length(); i++)if (surname[i] == ' ')surname[i] = '_';
+			for (int i = 0; i < key.length(); i++)if (key[i] == ' ')key[i] = '_';
+
+			string res = "";
+			//first part
+			{
+				//create table 
+				vector<char> table; char z = 'A';
+				for (int i = 0; i < 26; i++, z++) {
+					table.push_back(z);
+				}
+				table.push_back('_');
+				srand(time(0));
+				random_shuffle(table.begin(), table.end());
+
+				//draw table
+				string outp = "ADFGVX", meg = "-+-+-+-+-+-+-+\n"; cout << " |";
+				for (int i = 0; i < outp.length(); i++)cout << outp[i] << "|"; cout << endl << meg;
+				for (int i = 0, z = 0; i < outp.length(); i++) {
+					cout << outp[i] << "|";
+					if (z >= 27)for (int j = 0; j < 6; j++, z++)cout << "-|";
+					else for (int j = 0; j < 6; j++, z++)if (z < 27)cout << table[z] << "|"; else cout << "-|";
+					cout << endl << meg;
+				}
+
+				//create prom string
+				map<int, char> tab;
+				tab[0] = 'A'; tab[1] = 'D'; tab[2] = 'F';
+				tab[3] = 'G'; tab[4] = 'V'; tab[5] = 'X';
+
+				int index = 0;
+				for (int i = 0; i < surname.length(); i++) {
+					for (int j = 0; j < 27; j++) {
+						if (surname[i] == table[j]) { index = j; break; }
+					}
+					res += tab[index / 6];
+					res += tab[index % 6];
+				}
+
+				//cout prom
+				cout << "Intermediate result: ";
+				for (int i = 0, kl = 1; i < res.length(); i++) {
+					if (kl % 3 == 0){cout << " "; kl = 1;}
+					cout << res[i];
+					kl++;
+				}
+				cout << "\n\n";
+			}
+
+			//second part
+			{
+				//sozd poryadka
+				vector<int> numbers(key.length());
+				string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				char l = 'A';
+				int och = 1;
+				for (int i = 0; i < 26 && och <= key.length(); i++, l++) {
+					for (int j = 0; j < key.length(); j++) {
+						if (key[j] == l) { numbers[j] = och; och++; }
+					}
+				}
+				
+				//draw table
+				string pr = "+"; for (int i = 0; i < key.length(); i++)pr += "-+";
+				cout << pr << endl << "|";
+				for (int i = 0; i < key.length(); i++)cout << key[i] << "|";
+				cout << endl << pr << endl << "|";
+				for (int i = 0; i < key.length(); i++)cout << numbers[i] << "|";
+				cout << endl << pr << endl;
+				int rows = res.length() / key.length();
+				if (res.length() % key.length() != 0)rows++;
+				for (int i = 0, z = 0; i < rows; i++) {
+					cout << "|";
+					for (int j = 0; j < key.length(); j++, z++) {
+						if (z < res.length())cout << res[z] << "|";
+						else cout << " |";
+					}
+					cout << endl << pr << endl;
+				}
+
+				//create res string
+				int num = 1;
+				string promRes = "";
+				for (int i = 0; i < key.length(); i++, num++) {
+					int index = -1;
+					for (int j = 0; j < key.length(); j++)if (numbers[j] == num) { index = j; break; }
+					for (int j = index; j < res.length(); ) {
+						promRes += res[j];
+						j += key.length();
+					}
+				}
+
+				//cout result
+				cout << "\nEncrypted string: ";
+				for (int i = 0, kl = 1; i < promRes.length(); i++) {
+					if (kl % 6 == 0) { cout << " "; kl = 1; }
+					cout << promRes[i];
+					kl++;
+				}
+				cout << "\n\n";
+			}
 			break;
 		}
 		default:
