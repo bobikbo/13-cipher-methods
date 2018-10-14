@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include <iostream>
 #include <string>
@@ -7,14 +7,21 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <cstdint>
+#include <math.h>
+#include <string.h>
+#include <string>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
 void showMenu()
 {
-	cout << "Select one of the algorithms (1-22):" << endl;
+	cout << "Select one of the algorithms (1-26):" << endl;
 	string n = "+--+------------------------------+";
 	cout << n << endl;
+	cout << "|    LAB 1                        |" << endl;
 	cout << "| 1| cipher of Caesar             |" << endl;
 	cout << "| 2| the slogan cipher            |" << endl;
 	cout << "| 3| a polybian square            |" << endl;
@@ -23,6 +30,7 @@ void showMenu()
 	cout << "| 6| systems of homophones        |" << endl;
 	cout << "| 7| cipher Vigenera              |" << endl;
 	cout << n << endl;
+	cout << "|    LAB 1 (DOP)                  |" << endl;
 	cout << "| 8| cipher of freemasons         |" << endl;
 	cout << "| 9| biggram cipher Ports         |" << endl;
 	cout << "|10| Hill's Cipher                |" << endl;
@@ -30,6 +38,7 @@ void showMenu()
 	cout << "|12| cipher Teni                  |" << endl;
 	cout << "|13| combined cipher              |" << endl;
 	cout << n << endl;
+	cout << "|    LAB 2                        |" << endl;
 	cout << "|14| simple single permutation    |" << endl;
 	cout << "|15| block single permutation     |" << endl;
 	cout << "|16| tabular route permutation    |" << endl;
@@ -38,14 +47,115 @@ void showMenu()
 	cout << "|19| magic square                 |" << endl;
 	cout << "|20| double permutation           |" << endl;
 	cout << n << endl;
+	cout << "|    LAB 3                        |" << endl;
 	cout << "|21| gamming cipher by module N/2 |" << endl;
 	cout << n << endl;
+	cout << "|    LAB 4                        |" << endl;
 	cout << "|22| ADFGVX                       |" << endl;
+	cout << n << endl;
+	cout << "|    LAB 5                        |" << endl;
+	cout << "|23| RSA                          |" << endl;
+	cout << "|24| algorithm knapsack problem   |" << endl;
+	cout << "|25| El-Gamal encryption algorithm|" << endl;
+	cout << n << endl;
+	cout << "|    LAB 6                        |" << endl;
+	cout << "|26| Binary repres. of numbers    |" << endl;
 	cout << n << endl;
 }
 
+long int gcd(long int e, long int t) {
+	while (e > 0) {
+		long int prom;
+		prom = e;
+		e = t % e;
+		t = prom;
+	}
+	return t;
+}
+
+long int findingE(long int t) {
+	long int e;
+	for (e = 2; e < t; e++) {
+		if (gcd(e, t) == 1) {
+			return e;
+		}
+	}
+	return -1;
+}
+
+long int findingD(long int e, long int t)
+{
+	long int d;
+	long int k = 1;
+
+	while (1){
+		k = k + t;
+		if (k % e == 0){
+			d = (k / e);
+			return d;
+		}
+	}
+}
+
+long int encrypt(long int i, long int e, long int n)
+{
+	long int current, result;
+
+	current = i - 31;
+	result = 1;
+
+	for (long int j = 0; j < e; j++)
+	{
+		result = result * current;
+		result = result % n;
+	}
+
+	return result;
+}
+
+long int decrypt(long int i, long int d, long int n)
+{
+	long int current, result;
+
+	current = i;
+	result = 1;
+
+	for (long int j = 0; j < d; j++)
+	{
+		result = result * current;
+		result = result % n;
+	}
+
+	return result + 31;
+}
+
+template <typename T>
+T modpow(T base, T exp, T modulus) {
+	base %= modulus;
+	T result = 1;
+	while (exp > 0) {
+		if (exp & 1) result = (result * base) % modulus;
+		base = (base * base) % modulus;
+		exp >>= 1;
+	}
+	return result;
+}
+
+template <typename T>
+T powmul(T base, T exp, T mul) {
+	T result = base;
+	for (T i = 2; i <= exp; i++) {
+		result = result * base;
+	}
+	result = result * mul;
+	return result;
+}
+
+
+
 int main()
 {
+
 	cout << "WELCOME TO BOBIK_BO CIPHER PROGRAM!\n\n";
 	bool gameLoop = true;
 
@@ -57,7 +167,7 @@ int main()
 		while (true)
 		{
 			cin >> number;
-			if (number > 22 || number < 1)
+			if (number > 26 || number < 1)
 				cout << "Please, enter correct number!\nYour choice: ";
 			else
 				break;
@@ -1559,6 +1669,432 @@ int main()
 				}
 				cout << "\n\n";
 			}
+			break;
+		}
+		case 23: {
+			cout << "RSA \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			//transform(surname.begin(), surname.end(), surname.begin(), toupper);
+
+			{
+				long int p, q, n, t, e, d;
+				//1) Filling the array with prime numbers from 100 to 10 000 and select randomly p and q
+				{
+					vector<long int> primeNumbers;
+					for (int i = 2; i < 100; i++) {
+						int flag = 0;
+						for (int j = 2; j <= i / 2; j++)
+							if (i%j == 0)
+							{
+								flag++;
+								break;
+							}
+						if (flag == 0)primeNumbers.push_back(i);
+					}
+					srand(time(0));
+					random_shuffle(primeNumbers.begin(), primeNumbers.end());
+					p = primeNumbers[0]; q = primeNumbers[1];
+				}
+
+				//2) Finding n and t
+				{
+					n = p * q;
+					t = (p - 1) * (q - 1);
+				}
+
+				//3) Finding e
+				{
+					e = findingE(t);
+				}
+
+				//4) Finding d
+				{
+					d = findingD(e, t);
+				}
+
+				//5) Cout public and private keys
+				{
+					cout << "\np = " << p << "; q = " << q << "; n = " << n << "; t = " << t << "; e = " << e << "; d = " << d << "\n";
+					cout << "RSA public keys (n = " << n << ", e = " << e << ")\n";
+					cout << "RSA private keys (n = " << n << ", d = " << d << ")\n\n";
+				}
+
+				//6) encryption and decryption
+				{
+					long int encryptedText[100];
+					memset(encryptedText, 0, sizeof(encryptedText));
+
+					long int decryptedText[100];
+					memset(decryptedText, 0, sizeof(decryptedText));
+
+					for (int i = 0; i < surname.length(); i++) {
+						encryptedText[i] = encrypt(surname[i], e, n);
+					}
+					for (int i = 0; i < surname.length(); i++) {
+						decryptedText[i] = decrypt(encryptedText[i], d, n);
+					}
+
+					cout << "THE ENCRYPTED MESSAGE IS: ";
+					for (long int i = 0; i < surname.length(); i++){
+						cout << (char)encryptedText[i];
+					}
+					cout << "\nTHE DECRYPTED MESSAGE IS: ";
+					for (long int i = 0; i < surname.length(); i++) {
+						cout << (char)decryptedText[i];
+					}
+					cout << "\n\n";
+					
+				}
+
+				
+			}
+			
+			break;
+		}
+		case 24: {
+			cout << "An algorithm based on a knapsack assembly problem \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+			
+			/*for (int i = 0; i < surname.length(); i++) {
+				string str = "";
+				int z = surname[i];
+				for (int i = 0; i<8; i++)
+				{
+					if (i == 4)str += ' ';
+					if (z & 128) str += "1";
+					else str += "0";
+					z <<= 1;
+				}
+				cout << str << '|';
+			}*/
+			//vector<vector<string> >table(8, vector<string>(8, 0));
+
+			//selecting numbers in key
+			vector<int> result;
+			vector<int> key;
+			vector<int> pr;
+			for (int i = 1; i < 100; i++)pr.push_back(i);
+			srand(time(0));
+			random_shuffle(pr.begin(), pr.end());
+			for (int i = 0; i < 8; i++)key.push_back(pr[i]);
+
+			//draw table
+			{
+				string str = "+";
+				for (int i = 0; i < surname.length(); i++) {
+					for (int j = 0; j < 17; j++)str += '-';
+					str += '+';
+				}
+				//row with letters
+				cout << str << "\n|";
+				for (int i = 0; i < surname.length(); i++) {
+					for (int j = 0; j < 8; j++)cout << " ";
+					cout << surname[i];
+					for (int j = 0; j < 8; j++)cout << " ";
+					cout << "|";
+				}
+				//row with binary code
+				cout << "\n" << str << "\n|";
+				for (int i = 0; i < surname.length(); i++) {
+					string strn = "";
+					int z = surname[i];
+					int prom = 0;
+					for (int j = 0; j<8; j++)
+					{
+						if (j == 4)strn += ' ';
+						if (z & 128) { strn += " 1"; prom += key[j]; }
+						else strn += " 0";
+						z <<= 1;
+					}
+					result.push_back(prom);
+					cout << strn << '|';
+				}
+				//row with key
+				cout << "\n" << str << "\n|";
+				for (int i = 0; i < surname.length(); i++) {
+					for (int j = 0; j < 8; j++) {
+						if (j == 4)cout << " ";
+						if (key[j] >= 10)cout << key[j];
+						else cout << " " << key[j];
+					}
+					cout << "|";
+				}
+				//row with summ
+				cout << "\n" << str << "\n|";
+				for (int i = 0; i < surname.length(); i++) {
+					for (int j = 0; j < 7; j++)cout << " ";
+					cout << result[i];
+					for (int j = 0; j < 7; j++)cout << " ";
+					if (result[i] < 100)cout << " ";
+					cout << "|";
+				}
+				cout << "\n" << str << "\n";
+			}
+
+
+			break;
+		}
+		case 25: {
+			cout << "El-Gamal encryption algorithm \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+			
+			
+			unsigned long int p, g, y, x, k, a, b;
+			
+			//p
+			vector<long int> primeNumbers;
+			for (int i = 2; i < 100; i++) {
+				int flag = 0;
+				for (int j = 2; j <= i / 2; j++)
+					if (i%j == 0)
+					{
+						flag++;
+						break;
+					}
+				if (flag == 0)primeNumbers.push_back(i);
+			}
+			srand(time(0));
+			random_shuffle(primeNumbers.begin(), primeNumbers.end());
+			p = primeNumbers[0];
+
+			//g
+			for (int i = 2; i < 100; i++) {
+				int z = gcd(i, p);
+				if (z == 1) { g = i; break; }
+			}
+
+			//x
+			vector<long int> xTable;
+			for (int i = 2; i < p; i++)xTable.push_back(i);
+			srand(time(0));
+			random_shuffle(xTable.begin(), xTable.end());
+			x = xTable[0];
+
+			//y
+			y = modpow(g, x, p);
+
+			//k, a, b, res
+			vector<long int> kTable;
+			string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+			string result = "";
+			for (int i = 2; i < p-1; i++)kTable.push_back(i);
+
+			string res = "+";
+			for (int i = 0; i < surname.length(); i++)res += "-----+";
+			cout << res << "\n|";
+			for (int i = 0; i < surname.length(); i++)cout << "  " << surname[i] << "  |";
+			cout << "\n" << res << "\n|";
+
+			srand(time(0));
+			for (int i = 0; i < surname.length(); i++) {
+				random_shuffle(kTable.begin(), kTable.end());
+				k = kTable[0];
+				
+				unsigned long int prom = 0;
+				for (int j = 0; j < letters.length(); j++)if (letters[j] == surname[i]) { prom = j + 1; break; }
+				a = modpow(g, k, p);
+				b = powmul(y, k, prom);
+				b = b % p;
+				//b = ((long int)(pow(y, k) * prom) % p);
+				//cout << "(" << a % 28 << "," << b % 28 << ") ";
+				if (a >= 10) cout << a << " ";
+				else if (a < 10) cout << " " << a << " ";
+				if (b >= 10) cout << b << "|";
+				else if (b < 10) cout << " " << b << "|";
+			}
+			cout << "\n" << res << "\n";
+
+			break;
+		}
+		case 26: {
+			/*cout << "Binary representation of numbers \nEnter your string: ";
+			cin.ignore();
+			getline(cin, surname);
+			transform(surname.begin(), surname.end(), surname.begin(), toupper);
+			*/
+			//104 -105 -106 107 -107
+
+			string str = "+";
+			for (int i = 0; i < 3; i++)str += "---------+";
+			cout << "\n" << str << "\n|";
+
+			for (int i = 0; i < 6; i++) {
+				if (i == 3)cout << 104;
+				cout << " ";
+			}
+			cout << "|";
+			for (int i = 0; i < 5; i++) {
+				if (i == 2)cout << "-105";
+				cout << " ";
+			}
+			cout << "|";
+			for (int i = 0; i < 5; i++) {
+				if (i == 2)cout << "-106";
+				cout << " ";
+			}
+			cout << "|\n" << str << "\n|";
+			/*for (int i = 0; i < 6; i++) {
+				if (i == 3)cout << 107;
+				cout << " ";
+			}
+			cout << "|";
+			for (int i = 0; i < 5; i++) {
+				if (i == 2)cout << "-107";
+				cout << " ";
+			}
+			cout << "|\n" << str << "\n|";*/
+
+			//1 число
+			{
+				string strn = "";
+				int z = 104;
+				int prom = 0;
+				for (int j = 0; j < 8; j++) {
+					if (j == 4)strn += ' ';
+					if (z & 128) { strn += "1"; }
+					else strn += "0";
+					z <<= 1;
+				}
+				cout << strn << '|';
+			}
+
+			//2 число
+			{
+				string strn = "";
+				int z = -105;
+				z *= -1;
+				int prom = 0;
+				for (int j = 0; j < 8; j++) {
+					if (j == 4)strn += ' ';
+					if (z & 128) { strn += "1"; }
+					else strn += "0";
+					z <<= 1;
+				}
+				for (int i = 0; i < 9; i++) {
+					if (i == 4)continue;
+					if (strn[i] == '1')strn[i] = '0';
+					else strn[i] = '1';
+				}
+				cout << strn << '|';
+			}
+
+			//3 число
+			{
+				string strn = "";
+				int z = -106;
+				int prom = 0;
+				for (int j = 0; j < 8; j++) {
+					if (j == 4)strn += ' ';
+					if (z & 128) { strn += "1"; }
+					else strn += "0";
+					z <<= 1;
+				}
+				cout << strn << "|\n" << str << "\n\n";
+			}
+
+			//4 число
+			{
+				int number = 107;
+				int por;
+				double ost;
+				for (int i = 0; true; i++) {
+					double prom = number / pow(2, i);
+					if (prom < 2) {
+						por = i;
+						ost = prom - 1;
+						break;
+					}
+				}
+				///////////////
+
+				string str =     "+-+-------+-+---------------+";
+				cout <<			 "+---------------------------+";
+				cout <<        "\n|           107             |\n";
+				cout << str << "\n|z|por-dok|z|   mantisa     |\n";
+				cout << str << "\n|";
+
+				///////////////
+				string strn = "";
+				int z = por;
+				int prom = 0;
+				for (int j = 0; j < 8; j++) {
+					if (z & 128) { strn += "1"; }
+					else strn += "0";
+					z <<= 1;
+				}
+				cout << strn[0] << "|";
+				for (int i = 1; i < 8; i++)cout << strn[i];
+				cout << "|";
+				string ostS = "0";
+				for (int i = 0; i < 15; i++) {
+					ost *= 2;
+					if (ost > 1) { ostS += "1"; ost -= 1; }
+					else if (ost < 1) { ostS += "0"; }
+					else if (ost == 1) { ostS += "10"; break; }
+				}
+				cout << ostS[0] << "|";
+				for (int i = 1; i < ostS.length(); i++)cout << ostS[i];
+				for (int i = ostS.length(); i < 16; i++)cout << "0";
+				cout << "|\n" << str << "\n\n";
+
+			}
+
+			//5 число
+			{
+
+				string str =     "+-+--------+-----------------------+";
+				cout <<          "+----------------------------------+";
+				cout <<        "\n|               -107               |\n";
+				cout << str << "\n|z|poryadok|      mantisa          |\n";
+				cout << str << "\n|";
+
+				///////////////////////
+
+				int number = -107;
+				int por;
+				double ost;
+				string mantisa = "";
+				for (int i = -2; true; i--) {
+					double prom = number * pow(2, i);
+					if (prom > -2) {
+						por = i * -1;
+						ost = prom * (-1) - 1;
+						mantisa += "1";
+						break;
+					}
+				}
+				////////////////////
+
+				string strn = "";
+				int z = por + 127;
+				int prom = 0;
+				for (int j = 0; j < 8; j++) {
+					if (z & 128) { strn += "1"; }
+					else strn += "0";
+					z <<= 1;
+				}
+				////////////////////
+
+				cout << mantisa[0] << "|";
+				for (int i = 0; i < 8; i++)cout << strn[i];
+				cout << "|";
+				string ostS = "";
+				for (int i = 0; i < 23; i++) {
+					ost *= 2;
+					if (ost > 1) { ostS += "1"; ost -= 1; }
+					else if (ost < 1) { ostS += "0"; }
+					else if (ost == 1) { ostS += "10"; break; }
+				}
+				for (int i = 0; i < ostS.length(); i++)cout << ostS[i];
+				for (int i = ostS.length(); i < 23; i++)cout << "0";
+				cout << "|\n" << str << "\n\n";
+			}
+
 			break;
 		}
 		default:
